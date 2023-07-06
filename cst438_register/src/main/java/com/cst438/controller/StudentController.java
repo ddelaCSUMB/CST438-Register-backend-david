@@ -46,8 +46,8 @@ public class StudentController {
             throw new Exception("Student not found");
         }
 
-        //set On hold and status code 0
         Student student = optStudent.get();
+        //set On hold and status code 0
         student.setStatus("On Hold");
         student.setStatusCode(0);
         Student updatedStudent = studentRepository.save(student);
@@ -55,7 +55,7 @@ public class StudentController {
     }
     
     @PutMapping("/{id}/off-hold")
-    public Student changeStudentStatus(@PathVariable("id") int studentId) throws Exception {
+    public Student setToActive(@PathVariable("id") int studentId) throws Exception {
         //check by studentId
         Optional<Student> optStudent = studentRepository.findById(studentId);
         if (!optStudent.isPresent()) {
@@ -64,10 +64,12 @@ public class StudentController {
         
         Student student = optStudent.get();
         
+        
         //change to active and status code 1
         student.setStatus("Active");
         student.setStatusCode(1);
         
+        //save updates
         Student updatedStudent = studentRepository.save(student);
         return updatedStudent;
     }
